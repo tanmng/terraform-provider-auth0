@@ -29,7 +29,7 @@ func newClientGrant() *schema.Resource {
 			"scope": {
 				Type:     schema.TypeList,
 				Elem:     &schema.Schema{Type: schema.TypeString},
-				Required: true,
+				Optional: true,
 			},
 		},
 	}
@@ -79,7 +79,7 @@ func buildClientGrant(d *schema.ResourceData) *management.ClientGrant {
 	g := &management.ClientGrant{
 		ClientID: String(d, "client_id"),
 		Audience: String(d, "audience"),
-		Scope:    Slice(d, "scope"),
+		Scope:    Slice(d, "scope", true),
 	}
 
 	return g

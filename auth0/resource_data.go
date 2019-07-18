@@ -82,14 +82,18 @@ func Bool(d Data, key string) (b *bool) {
 }
 
 // Slice accesses the value held by key and type asserts it to a slice.
-func Slice(d Data, key string) (s []interface{}) {
+func Slice(d Data, key string, allowEmpty ...bool) (s []interface{}) {
 	if d.HasChange(key) {
 		v, ok := d.GetOkExists(key)
 		if ok {
 			s = v.([]interface{})
 		}
 	}
-	return
+	if len(allowEmpty) == 1 && allowEmpty[0] == true {
+		return make([]interface{}, 0)
+	} else {
+		return
+	}
 }
 
 // Map accesses the value held by key and type asserts it to a map.
